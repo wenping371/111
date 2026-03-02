@@ -1,0 +1,14 @@
+# Requirements for Python Web Scraping, PDF Generation, and Web Framework
+
+## Web Scraping
+beautifulsoup4
+requests
+selenium
+
+## PDF Generation
+reportlab
+Pillow
+
+## Web Framework
+Flask
+Django
