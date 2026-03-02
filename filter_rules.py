@@ -1,25 +1,37 @@
 # filter_rules.py
 
-# Filter logic for equipment categories and concrete materials
+def filter_projects(projects, equipment_types, exclusion_rules):
+    """
+    Filters the given projects based on equipment types and exclusion rules.
 
-def filter_equipment_and_materials(items):
-    exclusion_criteria = [
-        "labor subcontracting",
-        "ecological restoration",
-        "sluice gates",
-        "reservoirs",
-        "highways",
-        "asphalt"
-    ]
+    :param projects: List of projects to filter
+    :param equipment_types: List of equipment types to include
+    :param exclusion_rules: List of rules to exclude certain projects
+    :return: Filtered list of projects
+    """
+    filtered_projects = []
 
-    filtered_items = []
-    for item in items:
-        if not any(exclusion in item.lower() for exclusion in exclusion_criteria):
-            filtered_items.append(item)
+    for project in projects:
+        if project['equipment_type'] in equipment_types:
+            exclude = False
+            for rule in exclusion_rules:
+                if rule in project['name']:
+                    exclude = True
+                    break
+            if not exclude:
+                filtered_projects.append(project)
 
-    return filtered_items
+    return filtered_projects
 
-# Example usage
-if __name__ == '__main__':
-    items = ["Concrete Mix", "Labor Subcontracting Task", "Highways Construction", "Excavator", "Asphalt Paving", "Reservoir Pump"]
-    print(filter_equipment_and_materials(items))
+# Example usage:
+projects = [
+    {'name': 'Concrete Project A', 'equipment_type': 'Excavator'},
+    {'name': 'Concrete Project B', 'equipment_type': 'Bulldozer'},
+    {'name': 'Other Project', 'equipment_type': 'Crane'},
+]
+
+equipment_types = ['Excavator', 'Bulldozer']
+exclusion_rules = ['Other']
+
+filtered = filter_projects(projects, equipment_types, exclusion_rules)
+print(filtered)
